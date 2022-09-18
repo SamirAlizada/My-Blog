@@ -1,0 +1,103 @@
+{% extends 'index.html' %}
+
+
+{% block content %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+    .card {
+        background-color: #8A8AF2;
+        box-shadow: 10px 10px 5px 12px lightblue;
+    }    
+
+    h5 {
+        color: #FFFFFF;
+    }
+
+    p {
+        color: #FFFFFF;
+    }
+
+</style>
+
+<div class="container">
+        {% comment %} <div class="row">
+            <div class="col-sm-4">
+                <br><br>
+                {% for category in categories %}
+                    <ul class="list-group">
+                        <a href="{% url 'category_detail' category.pk %}">
+                            <li class="list-group-item">{{category.category_name}}</li>
+                        </a>
+                    </ul>
+                    <br>
+                {% endfor %}
+            </div> {% endcomment %}
+            
+        
+            <br><br>
+        <center>
+            <form method="POST" action="" style="margin:auto:max-width:350px;" > <!--text-align-last: right; -->
+                {% csrf_token %}
+                <input type="text" placeholder = "Search..." name="search" style="height:36px; width:350px" >
+                <button type="submit" class="btn btn-success" style="background-color: #F076AC;">
+                    <i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+        <br><br>
+        </center>
+
+
+        {% if results %}
+
+        <div class="row"> 
+            {% for blog in results %}
+                <div class="col-sm-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="/media/{{blog.blog_image}}" class="card-img-top" alt="{{blog.blog_image}}" style="width: 18rem; height: 100px">
+                        <div class="card-body">
+                            <h5 class="card-title">{{blog.title}}</h5>
+                            <p class="card-text">{{blog.description}}</p>
+                            <br>
+                            <a href="{% url 'blog-detail' blog.pk %}" class="btn btn-primary">𝒟𝑒𝓉𝒶𝒾𝓁</a>
+                        </div>
+                    </div>
+                    <br><br>
+                </div>
+            {% endfor %}
+            {% else %}
+        </div>
+        
+        
+        <div class="row">
+            {% for blog in blogs %}
+            
+                <div class="col-sm-4">
+                    <div class="container">
+                    <div class="card" style="width: 22rem; height: 20rem">
+                            <img src="/media/{{blog.blog_image}}" class="card-img-top" alt="{{blog.blog_image}}" style="width: 22rem; height: 150px">
+                            <div class="card-body">
+                                <h5 class="card-title" style="font-style: italic;">{{blog.title}}</h5>
+                                <p class="card-text" style="display:inline-block;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                max-width: 13ch;
+                                font-style: italic;">{{blog.description}}</p>
+                                <br>
+                                <center>
+                                    <a href="{% url 'blog-detail' blog.pk %}" class="btn btn-primary">𝒟𝑒𝓉𝒶𝒾𝓁</a>
+                                </center>
+                            </div>
+                        </div>
+                    <br><br>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+</div>
+
+{% endblock content %}
+
+
